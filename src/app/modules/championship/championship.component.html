@@ -2,49 +2,56 @@
   <h2 class="text-center my-3">RaceChronos Championship</h2>
   <div class="ms-2">
     <h5>Paramètres du championnat</h5>
-      <hr>
-      <div>Ajouter un participant :</div>
-      <input type="text" [(ngModel)]="participantAjoute">
-      <button (click)="addParticipant()" class="ms-2 btn btn-primary">Ajouter</button>
-      <div>
-        <p class="mt-2">Participants:</p>
-        <p *ngFor="let pilote of pilotes">- {{pilote}}</p>
-      </div>
+    <hr>
+    <div>Ajouter un participant :</div>
+    <input type="text" [(ngModel)]="participantAjoute">
+    <button (click)="addParticipant()" class="ms-2 btn btn-primary">Ajouter</button>
+    <div>
+      <p class="mt-2">Participants:</p>
+      <p *ngFor="let pilote of pilotes">- {{pilote}}</p>
+    </div>
 
   </div>
 
+  <div *ngIf="showConfirmation">
+    Are you sure you want to leave this page?
+    <button (click)="refreshPage()">Refresh</button>
+  </div>
 
-    <h5 class="text-center">Résultats</h5>
-    <div class="ms-2"><hr>
-      <div *ngFor="let nom of pilotes; let i = index">
-        {{nom}} :
-        <div *ngFor="let chronos of tempsSpeciales[i]; let specialIndex = index" >
 
-          <div class="d-flex align-items-center" *ngIf="chronos != undefined">
-            <p class="my-0">Spéciale {{specialIndex + 1}}: {{chronos.minutes}}.{{chronos.secondes}}.{{chronos.millisecondes}}</p>
-            <button class="btn btn-danger ms-2 my-1" (click)="deleteChronos(i, specialIndex)">Supprimer le chronos
-            </button>
+  <h5 class="text-center">Résultats</h5>
+  <div class="ms-2" *ngIf="!showConfirmation">
+    <hr>
+    <div *ngFor="let nom of pilotes; let i = index">
+      {{nom}} :
+      <div *ngFor="let chronos of tempsSpeciales[i]; let specialIndex = index">
+
+        <div class="d-flex align-items-center" *ngIf="chronos != undefined">
+          <p class="my-0">Spéciale {{specialIndex + 1}}: {{chronos.minutes}}.{{chronos.secondes}}
+            .{{chronos.millisecondes}}</p>
+          <button class="btn btn-danger ms-2 my-1" (click)="deleteChronos(i, specialIndex)">Supprimer le chronos
+          </button>
+        </div>
+
+      </div>
+
+      <div class="mt-2 d-flex align-items-center">
+        <form>
+          <div class="mb-1">
+            <input type="number" style="width: 50px" #min id="'player' + i"> min
+            <input type="number" style="width: 50px" #sec> sec
+            <input type="number" style="width: 50px" #millis> millis
           </div>
+          <button (click)="addChronos(min.value, sec.value, millis.value, i); resetInputs()" class="btn btn-primary">Ajouter le
+            chronos à {{nom}}
+          </button>
+        </form>
+      </div>
 
-        </div>
-
-        <div class="mt-2 d-flex align-items-center">
-          <form>
-            <div class="mb-1">
-              <input type="number" style="width: 50px" #min> min <input type="number" style="width: 50px" #sec> sec
-              <input
-                type="number" style="width: 50px" #millis> millis
-            </div>
-            <button (click)="addChronos(min.value, sec.value, millis.value, i)" class="btn btn-primary">Ajouter le
-              chronos à {{nom}}
-            </button>
-          </form>
-        </div>
-
-        <div class="border-1 fw-bold">
-          <p *ngIf="tempsSpeciales[i] != null">Temps total: {{tempsTotalParticipant(tempsSpeciales[i])}}</p>
-        </div>
+      <div class="border-1 fw-bold">
+        <p *ngIf="tempsSpeciales[i] != null">Temps total: {{tempsTotalParticipant(tempsSpeciales[i])}}</p>
       </div>
     </div>
   </div>
+</div>
 

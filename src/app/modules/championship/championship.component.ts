@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {newArray} from "@angular/compiler/src/util";
 import {Chronos} from "../../interfaces/Chronos";
@@ -11,14 +11,18 @@ import {Chronos} from "../../interfaces/Chronos";
 })
 export class ChampionshipComponent implements OnInit {
 
+  @ViewChild('min') minInput!: ElementRef;
+  @ViewChild('sec') secInput!: ElementRef;
+  @ViewChild('millis') millisInput!: ElementRef;
+
   pilotes: string[] = []
+
+  showConfirmation = false;
+
 
   championshipForm!: FormGroup
   participantAjoute: string = '';
-  tempsSpeciales: Chronos[][] = [
-    /*[{minutes:5, secondes:32,millisecondes: 856},{minutes:4, secondes:10,millisecondes: 500},{minutes:3, secondes:27,millisecondes: 900}],
-    [{minutes:5, secondes:32,millisecondes: 856},{minutes:4, secondes:10,millisecondes: 500},{minutes:3, secondes:27,millisecondes: 900}]*/
-  ];
+  tempsSpeciales: Chronos[][] = [];
 
   constructor() { }
 
@@ -73,5 +77,30 @@ export class ChampionshipComponent implements OnInit {
 
 
     return min + '.' + sec + '.' + tempsTotalmillisec
+  }
+
+
+  @HostListener('window:beforeunload', ['$event'])
+  // @ts-ignore
+  unloadNotification($event: any) {
+    if (this.showConfirmation) {
+      $event.returnValue = true; // Required for Chrome and Firefox
+      return 'Are you sure you want to leave this page?';
+    } else {
+      $event.returnValue = false;
+    }
+
+  }
+
+  refreshPage() {
+    // Perform any necessary actions before refreshing the page
+    this.showConfirmation = false;
+    window.location.reload();
+  }
+
+  resetInputs() {
+    this.minInput.nativeElement.value = null;
+    this.secInput.nativeElement.value = null;
+    this.millisInput.nativeElement.value = null;
   }
 }

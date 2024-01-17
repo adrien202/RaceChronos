@@ -1,14 +1,18 @@
-<div class="bg-titre">
-  <h2 class="text-center my-3">RaceChronos Championship</h2>
-  <div class="ms-2">
-    <h5>Paramètres du championnat</h5>
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <img src="assets/dirtRallyCar1.jpg" alt="WRC Logo" class="pt-2">
+  <h2 class="text-center my-3 text-decoration-underline">RaceChronos Championship</h2>
+</div>
+  <div class="bg-championship">
+    <h5 class="ms-5 pt-2">Paramètres du championnat</h5>
     <hr>
-    <div>Ajouter un participant :</div>
-    <input type="text" [(ngModel)]="participantAjoute">
-    <button (click)="addParticipant()" class="ms-2 btn btn-primary">Ajouter</button>
-    <div>
-      <p class="mt-2">Participants:</p>
-      <p *ngFor="let pilote of pilotes">- {{pilote}}</p>
+    <div class="ms-2">
+      <div>Ajouter un participant :</div>
+      <input type="text" [(ngModel)]="participantAjoute">
+      <button (click)="addParticipant()" class="ms-2 btn btn-primary">Ajouter</button>
+      <div>
+        <p class="pb-2">Participants:</p>
+        <p *ngFor="let pilote of pilotes" class="pb-2">- {{ pilote }}</p>
+      </div>
     </div>
 
   </div>
@@ -22,7 +26,7 @@
   <h5 class="text-center">Résultats</h5>
   <div class="ms-2" *ngIf="!showConfirmation">
     <hr>
-    <div *ngFor="let nom of pilotes; let i = index">
+    <div *ngFor="let nom of pilotes; let i = index" class="mb-2">
       {{nom}} :
       <div *ngFor="let chronos of tempsSpeciales[i]; let specialIndex = index">
 
@@ -53,5 +57,3 @@
       </div>
     </div>
   </div>
-</div>
-

@@ -11,4 +11,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 This app was build for gaming sessions with my friends in order to keep track of our times in each special test in rally games.
 I made the display to best fit mobile format.
 
-You can try it at this url: 
+You can try it at this url: https://adrien202.github.io/RaceChronos/
